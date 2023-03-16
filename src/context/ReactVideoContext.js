@@ -2,9 +2,11 @@ import React from 'react'
 
 const ReactVideoContext = React.createContext({
   isDark: true,
-  activeNavbar: 'Home',
+  activeNav: 'HOME',
   changeTheme: () => {},
-  changeActiveNavbar: () => {},
+  listOfSavedVideos: [],
+  addSavedVideo: () => {},
+  removeSavedVideo: () => {},
+  changeActiveNav: () => {},
 })
-
 export default ReactVideoContext

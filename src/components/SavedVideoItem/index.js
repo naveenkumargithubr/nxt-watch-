@@ -3,7 +3,6 @@ import {BsDot} from 'react-icons/bs'
 import {formatDistanceToNow} from 'date-fns'
 
 import VideoContext from '../../context/ReactVideoContext'
-
 import {
   Item,
   LinkGenerate,
@@ -12,19 +11,16 @@ import {
   ItemTextContainer,
   ProfileImage,
   DescriptionContainer,
-  Title,
   ChannelDescriptionContainer,
+  Title,
   Name,
   ViewsCountAndDate,
   ViewsCount,
   PublishedAt,
-  NameDark,
-  ViewsCountDark,
-  PublishedAtDark,
   TitleDark,
 } from './styledComponents'
 
-const HomeVideoItem = props => {
+const SavedVideoItem = props => {
   const {video} = props
   const {
     id,
@@ -35,7 +31,7 @@ const HomeVideoItem = props => {
     viewCount,
     publishedAt,
   } = video
-  const videoItemDark = () => (
+  const TrendingVideoItemDark = () => (
     <LinkGenerate to={`/videos/${id}`}>
       <Item>
         <ThumbnailImageContainer>
@@ -46,16 +42,16 @@ const HomeVideoItem = props => {
           <DescriptionContainer>
             <TitleDark>{title}</TitleDark>
             <ChannelDescriptionContainer>
-              <NameDark>{name}</NameDark>
+              <Name>{name}</Name>
               <ViewsCountAndDate>
-                <ViewsCountDark>
-                  <BsDot className="hide-dot" size="18" color="#64748b" />
+                <ViewsCount>
+                  <BsDot className="hide-dot" size="18" color="#909090" />
                   {viewCount} views
-                </ViewsCountDark>
-                <PublishedAtDark>
-                  <BsDot size="18" color="#64748b" />
+                </ViewsCount>
+                <PublishedAt>
+                  <BsDot size="18" color="#909090" />
                   {formatDistanceToNow(new Date(publishedAt))}
-                </PublishedAtDark>
+                </PublishedAt>
               </ViewsCountAndDate>
             </ChannelDescriptionContainer>
           </DescriptionContainer>
@@ -63,7 +59,7 @@ const HomeVideoItem = props => {
       </Item>
     </LinkGenerate>
   )
-  const videoItemLight = () => (
+  const TrendingVideoItemLight = () => (
     <LinkGenerate to={`/videos/${id}`}>
       <Item>
         <ThumbnailImageContainer>
@@ -91,14 +87,13 @@ const HomeVideoItem = props => {
       </Item>
     </LinkGenerate>
   )
-
   return (
     <VideoContext.Consumer>
       {value => {
         const {isDark} = value
-        return isDark ? videoItemDark() : videoItemLight()
+        return isDark ? TrendingVideoItemDark() : TrendingVideoItemLight()
       }}
     </VideoContext.Consumer>
   )
 }
-export default HomeVideoItem
+export default SavedVideoItem

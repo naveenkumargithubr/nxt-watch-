@@ -1,12 +1,12 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
+
 import {Link} from 'react-router-dom'
 
-export const HomeVideosLinkPath = styled(Link)`
+export const LinkGenerate = styled(Link)`
   text-decoration: none;
-  color: '#475569';
 `
 
-export const VideoItemCardContainer = styled.li`
+export const Item = styled.li`
   width: 300px;
   margin-right: 12px;
   margin-bottom: 12px;
@@ -17,40 +17,37 @@ export const VideoItemCardContainer = styled.li`
   }
 `
 
-export const ThumbnailImgContainer = styled.div`
+export const ThumbnailImageContainer = styled.div`
   @media (max-width: 768px) {
     margin-bottom: 5px;
   }
 `
 
-export const ThumbnailImg = styled.img`
+export const Thumbnail = styled.img`
   width: 100%;
-  @media (max-width: 767px) and (min-width: 576px) {
-    width: 100%;
+  height: 190px;
+  @media (max-width: 664px) and (min-width: 564px) {
+    height: 330px;
   }
 `
-
-export const LogoAndTitleContainer = styled.div`
+export const ItemTextContainer = styled.div`
   display: flex;
-  align-items: center;
   flex-direction: row;
+  align-items: center;
 `
-
-export const MatchDetailsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-export const ProfileImg = styled.img`
+export const ProfileImage = styled.img`
   width: 30px;
   height: 30px;
   align-self: flex-start;
   margin-top: 12px;
   margin-right: 10px;
 `
-
-export const TitleDesc = styled.h1`
-  color: #ffffff;
+export const DescriptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+export const Title = styled.p`
+  color: #1e293b;
   font-size: 15px;
   font-family: 'Roboto';
   font-weight: 400;
@@ -60,50 +57,57 @@ export const TitleDesc = styled.h1`
     font-size: 16px;
   }
 `
-
-export const CountAndDateContainer = styled.div`
+export const ChannelDescriptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 768px) {
+    flex-direction: row;
+  }
+`
+export const Name = styled.p`
+  color: #909090;
+  font-size: 15px;
+  font-family: 'Roboto';
+  font-weight: 500;
+  margin-bottom: 0px;
+  @media (max-width: 768px) {
+    font-size: 12px;
+    margin-right: 13px;
+  }
+`
+export const ViewsCountAndDate = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 0px;
 `
-
-export const TeamName = styled.h1`
-  margin-top: 8px;
-  margin-bottom: 0px;
-  font-family: 'roboto';
-  font-size: 18px;
-  font-weight: 500;
-  color: #606060;
-`
-
 export const ViewsCount = styled.p`
-  display: flex;
-  align-items: center;
-  color: #475569;
-  font-family: 'Roboto';
+  color: #909090;
   font-size: 13px;
+  font-family: 'Roboto';
   font-weight: 500;
-  @media screen and (min-width: 768px) {
-    font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+`
+export const PublishedAt = styled.p`
+  color: #909090;
+  font-size: 13px;
+  font-family: 'Roboto';
+  font-weight: 500;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  @media (max-width: 768px) {
+    font-size: 12px;
   }
 `
 
-export const TimeCount = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #475569;
-  font-family: 'Roboto';
-  font-size: 13px;
-  font-weight: 500;
-  @media screen and (min-width: 768px) {
-    font-size: 16px;
-  }
-`
-
-// light theme home videos design
-export const TitleDescLight = styled.h1`
-  color: #475569;
+/** Dark Page */
+export const TitleDark = styled.p`
+  color: #f1f1f1;
   font-size: 15px;
   font-family: 'Roboto';
   font-weight: 400;
@@ -111,5 +115,41 @@ export const TitleDescLight = styled.h1`
   line-height: 1.4;
   @media (max-width: 768px) {
     font-size: 16px;
+  }
+`
+export const NameDark = styled.p`
+  color: #64748b;
+  font-size: 15px;
+  font-family: 'Roboto';
+  font-weight: 500;
+  margin-bottom: 0px;
+  @media (max-width: 768px) {
+    font-size: 12px;
+    margin-right: 13px;
+  }
+`
+export const ViewsCountDark = styled.p`
+  color: #64748b;
+  font-size: 13px;
+  font-family: 'Roboto';
+  font-weight: 500;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+`
+export const PublishedAtDark = styled.p`
+  color: #64748b;
+  font-size: 13px;
+  font-family: 'Roboto';
+  font-weight: 500;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  @media (max-width: 768px) {
+    font-size: 12px;
   }
 `

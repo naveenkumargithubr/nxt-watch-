@@ -1,0 +1,15 @@
+/* here reactplayersm is hide after 768px */
+
+@media (min-width: 768px) {
+  .reactplayersm {
+    display: none;
+  }
+}
+
+/* here reactplayerlg is hide upto 768px after 768px it wwill be displayed*/
+
+@media (max-width: 768px) {
+  .reactplayerlg {
+    display: none;
+  }
+}

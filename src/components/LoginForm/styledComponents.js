@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
-export const LoginBgLightContainer = styled.div`
+export const LoginContainer = styled.div`
   min-height: 100vh;
   background-color: #f9f9f9;
   display: flex;
@@ -9,7 +9,7 @@ export const LoginBgLightContainer = styled.div`
   justify-content: center;
 `
 
-export const LoginCardBgLightContainer = styled.div`
+export const LoginCard = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width: 450px;
   padding: 20px;
@@ -23,24 +23,21 @@ export const LoginCardBgLightContainer = styled.div`
   }
 `
 
-export const WebsiteLogoContainer = styled.div`
+export const LogoContainer = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
   margin-bottom: 35px;
   margin-top: 20px;
 `
 
-export const WebLogoImg = styled.img`
+export const LogoImage = styled.img`
   width: 150px;
   height: 50px;
 `
 
-export const FormLoginContainer = styled.form`
-  margin-top: 30px;
-`
+export const FormContainer = styled.form``
 
 export const UsernameContainer = styled.div`
   width: 380px;
@@ -51,8 +48,17 @@ export const UsernameContainer = styled.div`
     width: 300px;
   }
 `
+export const PasswordContainer = styled.div`
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  @media (max-width: 768px) {
+    width: 300px;
+  }
+`
 
-export const LabelLight = styled.label`
+export const Label = styled.label`
   color: #616e7c;
   font-weight: bold;
   font-family: 'Roboto';
@@ -61,7 +67,7 @@ export const LabelLight = styled.label`
   line-height: 1.4;
 `
 
-export const InputLight = styled.input`
+export const Input = styled.input`
   border: 1px solid #94a3b8;
   outline: none;
   height: 35px;
@@ -74,14 +80,14 @@ export const InputLight = styled.input`
   margin-left: 3px;
 `
 
-export const CheckBoxContainer = styled.div`
+export const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
   margin-left: 2px;
   margin-bottom: 28px;
 `
 
-export const InputCheckBoxLight = styled.input`
+export const InputCheckBox = styled.input`
   border: 1px solid #94a3b8;
   outline: none;
   height: 16px;
@@ -91,14 +97,13 @@ export const InputCheckBoxLight = styled.input`
   margin-right: 10px;
 `
 
-export const LabelCheckLight = styled.label`
+export const LabelShowPassword = styled.label`
   color: #0f0f0f;
   font-weight: 600;
   font-family: 'Roboto';
   font-size: 16px;
 `
-
-export const LoginButton = styled.button`
+export const SubmitButton = styled.button`
   outline: none;
   border: none;
   cursor: pointer;
@@ -111,23 +116,21 @@ export const LoginButton = styled.button`
   font-size: 16px;
   background: #3b82f6;
   border-radius: 10px;
-  margin-bottom: 8px;
-
+  margin-bottom: 25px;
   @media (max-width: 768px) {
     width: 300px;
   }
 `
 
 export const ErrorMsg = styled.p`
-  color: #ff0000;
-  font-family:"Roboto",
-  font-size: 20px;
+  color: red;
   font-weight: 500;
+  font-family: 'Roboto';
+  font-size: 16px;
 `
 
-// dark theme container styling
-
-export const LoginBgDarkContainer = styled.div`
+/** dark login page styled-components */
+export const LoginContainerDark = styled.div`
   background-color: #181818;
   min-height: 100vh;
   display: flex;
@@ -136,8 +139,8 @@ export const LoginBgDarkContainer = styled.div`
   justify-content: center;
 `
 
-export const LoginCardBgDarkContainer = styled.div`
-  background-color: #383838;
+export const LoginCardDark = styled.div`
+  background-color: #0f0f0f;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width: 450px;
   padding: 20px;
@@ -148,6 +151,34 @@ export const LoginCardBgDarkContainer = styled.div`
   justify-content: center;
   @media (max-width: 768px) {
     width: 350px;
+  }
+`
+
+export const LogoContainerDark = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 35px;
+  margin-top: 20px;
+`
+
+export const UsernameContainerDark = styled.div`
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  @media (max-width: 768px) {
+    width: 300px;
+  }
+`
+export const PasswordContainerDark = styled.div`
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  @media (max-width: 768px) {
+    width: 300px;
   }
 `
 
@@ -174,6 +205,13 @@ export const InputDark = styled.input`
   background: transparent;
 `
 
+export const CheckboxContainerDark = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 2px;
+  margin-bottom: 28px;
+`
+
 export const InputCheckBoxDark = styled.input`
   border: 1px solid #94a3b8;
   outline: none;
@@ -184,7 +222,7 @@ export const InputCheckBoxDark = styled.input`
   margin-right: 10px;
 `
 
-export const LabelCheckLDark = styled.label`
+export const LabelShowPasswordDark = styled.label`
   color: #f8fafc;
   font-weight: 600;
   font-family: 'Roboto';

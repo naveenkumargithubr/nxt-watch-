@@ -1,41 +1,90 @@
 import {Component} from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
 
-import Cookies from 'js-cookie'
-
-import LoginForm from './components/LoginForm'
+import Login from './components/LoginForm'
 import Home from './components/Home'
-import HomeVideoItemDetails from './components/HomeVideoItemDetails'
+import Trending from './components/Trending'
+import Gaming from './components/Game'
+import VideoItemDetails from './components/HomeVideoItemDetails'
+import NotFound from './components/NotFound'
+import ProtectedRoute from './components/ProtectedRoute'
 
-import ReactVideoContext from './context/ReactVideoContext'
+import SavedVideos from './components/SavedVideos'
+
+import VideoContext from './context/ReactVideoContext'
 
 import './App.css'
 
-// Replace your code here
 class App extends Component {
-  state = {isDark: false}
+  state = {
+    isDark: false,
+    listOfSavedVideos: [],
+    activeNav: 'HOME',
+  }
 
-  onClickChangeTheme = () => {
+  changeActiveNav = activeTab => {
+    this.setState({
+      activeNav: activeTab,
+    })
+  }
+
+  addVideoToList = videoDetails => {
+    const {listOfSavedVideos} = this.state
+    const index = listOfSavedVideos.findIndex(
+      eachVideo => eachVideo.id === videoDetails.id,
+    )
+    if (index === -1) {
+      this.setState({listOfSavedVideos: [...listOfSavedVideos, videoDetails]})
+    } else {
+      listOfSavedVideos.splice(index, 1)
+      this.setState({listOfSavedVideos})
+    }
+  }
+
+  clickChangeTheme = () => {
     this.setState(prevState => ({
       isDark: !prevState.isDark,
     }))
   }
 
+  removeVideo = id => {
+    const {listOfSavedVideos} = this.state
+    const updatedSavedVideos = listOfSavedVideos.filter(
+      eachVideo => eachVideo.id !== id,
+    )
+    this.setState({listOfSavedVideos: updatedSavedVideos})
+  }
+
   render() {
-    const {isDark} = this.state
+    const {isDark, listOfSavedVideos, activeNav} = this.state
     return (
-      <ReactVideoContext.Provider
-        value={{isDark, changeTheme: this.onClickChangeTheme}}
+      <VideoContext.Provider
+        value={{
+          isDark,
+          listOfSavedVideos,
+          activeNav,
+          changeTheme: this.clickChangeTheme,
+          addSavedVideo: this.addVideoToList,
+          removeSavedVideo: this.removeVideo,
+          changeActiveNav: this.changeActiveNav,
+        }}
       >
         <Switch>
-          <Route exact path="/login" component={LoginForm} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/videos" component={HomeVideoItemDetails} />
-          {/* path="/videos/:id" */}
+          <Route exact path="/login" component={Login} />
+          <ProtectedRoute exact path="/" component={Home} />
+          <ProtectedRoute exact path="/trending" component={Trending} />
+          <ProtectedRoute exact path="/gaming" component={Gaming} />
+          <ProtectedRoute
+            exact
+            path="/videos/:id"
+            component={VideoItemDetails}
+          />
+          <ProtectedRoute exact path="/saved-videos" component={SavedVideos} />
+          <ProtectedRoute exact path="/not found" component={NotFound} />
+          <Redirect to="/not found" />
         </Switch>
-      </ReactVideoContext.Provider>
+      </VideoContext.Provider>
     )
   }
 }
-
 export default App

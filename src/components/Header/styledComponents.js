@@ -170,9 +170,16 @@ export const MenuSmallModalCloseContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center
-  min-height: 100%;
-  background-color: ${props => (props.isDark ? '#181818' : '#ffffff')};
+  justify-content: center;
+  padding: 30px;
+  margin-left: 16px;
+  margin-right: 16px;
+  border-radius: 10px;
+  width: 100%;
+  background-color: ${props => (props.isDark ? ' #000000' : '#d7dfe9')};
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
 `
 export const CloseButton = styled.button`
   align-self: flex-end;
@@ -197,6 +204,8 @@ export const NavItems = styled.ul``
 
 export const NavItem = styled.li`
   list-style-type: none;
+
+  background-color: ${props => props.activeNavbar && '#d7dfe9'};
 `
 
 export const NavHeading = styled.p`

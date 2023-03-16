@@ -46,8 +46,8 @@ import {
 const Header = props => {
   // when we click on the logout button or logout icon popup is displayed if confirm button is click page should be logged out
   const onClickLogOut = () => {
-    Cookies.remove('jwt_token')
     const {history} = props
+    Cookies.remove('jwt_token')
     history.replace('/login')
     console.log('logout')
   }
@@ -56,6 +56,22 @@ const Header = props => {
     <ReactVideoContext.Consumer>
       {value => {
         const {isDark, changeActiveNavbar, activeNavbar} = value
+
+        const onClickHomeHead = () => {
+          changeActiveNavbar('HOME')
+        }
+
+        const onClickTrendHead = () => {
+          changeActiveNavbar('TREND')
+        }
+
+        const onClickGameHead = () => {
+          changeActiveNavbar('GAME')
+        }
+
+        const onClickSavedVideo = () => {
+          changeActiveNavbar('SAVE')
+        }
         return (
           <Popup
             modal
@@ -66,34 +82,38 @@ const Header = props => {
             }
           >
             {close => (
-              <MenuSmallModalCloseContainer>
+              <MenuSmallModalCloseContainer isDark={isDark}>
                 <CloseButton type="button" onClick={() => close()}>
-                  <IoMdClose size="26" onClick={() => close()} />
+                  <IoMdClose
+                    color={isDark ? '#ffffff' : '#000000'}
+                    size="26"
+                    onClick={() => close()}
+                  />
                 </CloseButton>
-                <NavItems>
-                  <NavItem>
-                    <NavItemLink to="/">
+                <NavItems isDark={isDark}>
+                  <NavItem activeNavbar={activeNavbar === 'HOME'}>
+                    <NavItemLink to="/" onClick={onClickHomeHead}>
                       <AiFillHome color="#424242" size="18" />
                       <NavHeading>Home</NavHeading>
                     </NavItemLink>
                   </NavItem>
 
-                  <NavItem>
-                    <NavItemLink to="/trending">
+                  <NavItem activeNavbar={activeNavbar === 'TREND'}>
+                    <NavItemLink to="/trending" onClick={onClickTrendHead}>
                       <HiFire color=" #475569" size="18" />
                       <NavHeading>Trending</NavHeading>
                     </NavItemLink>
                   </NavItem>
 
-                  <NavItem>
-                    <NavItemLink to="/gaming">
+                  <NavItem activeNavbar={activeNavbar === 'GAME'}>
+                    <NavItemLink to="/gaming" onClick={onClickGameHead}>
                       <GiLoveMystery color="#424242" size="18" />
                       <NavHeading>Gaming</NavHeading>
                     </NavItemLink>
                   </NavItem>
 
-                  <NavItem>
-                    <NavItemLink to="/saved-videos">
+                  <NavItem activeNavbar={activeNavbar === 'SAVE'}>
+                    <NavItemLink to="/saved-videos" onClick={onClickSavedVideo}>
                       <RiMenuAddFill color=" #475569" size="18" />
                       <NavHeading>Saved Videos</NavHeading>
                     </NavItemLink>
@@ -110,7 +130,7 @@ const Header = props => {
   const isHeaderDark = themeBtnlogo => (
     <ReactVideoContext.Consumer>
       {value => {
-        const {changeTheme} = value
+        const {changeTheme, isDark} = value
         return (
           <DarkHeaderContainer>
             <LogoImgContainer>
@@ -152,6 +172,7 @@ const Header = props => {
                         <ConfirmDarkButton
                           type="button"
                           onClick={onClickLogOut}
+                          data-testid="theme"
                         >
                           Confirm
                         </ConfirmDarkButton>
@@ -181,6 +202,7 @@ const Header = props => {
                         <ConfirmDarkButton
                           type="button"
                           onClick={onClickLogOut}
+                          data-testid="theme"
                         >
                           Confirm
                         </ConfirmDarkButton>
@@ -213,7 +235,7 @@ const Header = props => {
             </LogoImgContainer>
 
             <NavItemsContainer>
-              <ThemeButton type="button">
+              <ThemeButton type="button" data-testid="savedVideos">
                 <ThemeImage src={themeBtnlogo} onClick={changeTheme} />
               </ThemeButton>
               <ProfileButton>
@@ -242,6 +264,7 @@ const Header = props => {
                         <ConfirmDarkButton
                           type="button"
                           onClick={onClickLogOut}
+                          data-testid="theme"
                         >
                           Confirm
                         </ConfirmDarkButton>
@@ -270,6 +293,7 @@ const Header = props => {
                         </CancelDarkButton>
                         <ConfirmDarkButton
                           type="button"
+                          data-testid="theme"
                           onClick={onClickLogOut}
                         >
                           Confirm

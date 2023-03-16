@@ -15,29 +15,71 @@ import ReactPlayer from 'react-player'
 
 import Header from '../Header'
 
-import ReactVideoContext from '../../context/ReactVideoContext'
+import VideoContext from '../../context/ReactVideoContext'
+
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
+
+import './index.css'
 
 import {
   VideoItemDetailsRouteContainer,
   VideoItemDetailsContainer,
-  SideNavDarkContainer,
-  SideNavLinksDarkContainer,
-  SideDarkNavLinkPath,
-  IconHeadingContainer,
-  HomeHeadingContainer,
-  NavHeading,
+  SideBarContainer,
+  NavLinksContainer,
+  LinkGenerate,
+  LinkContainer,
+  Nav,
   ContactUsContainer,
-  ContactUsHeading,
-  ContactUsLogosContainer,
-  SocialLogo,
-  ContactUsDesc,
-  SideNavLightContainer,
-  NavHeadingLight,
-  ContactUsHeadingLight,
-  ContactUsDescLight,
+  ContactUs,
+  LogosContainer,
+  Logo,
+  ContactUsTagLine,
+  VideoBarContainer,
+  ReactPlayerContainer,
+  Title,
+  VideoViewsAndPublishAndLikeContainer,
+  ViewsAndPublishContainer,
+  ViewsCount,
+  Published,
+  LikeDislikeAndSaveContainer,
+  LikeContainer,
+  DislikeContainer,
+  SaveContainer,
+  SocialButton,
+  TextContent,
+  LikeTextContent,
+  DisLikeTextContent,
+  Horizontal,
+  ProfileWithSubscribersContainer,
+  Profile,
+  NameAndSubscribers,
+  Name,
+  Subscribers,
+  Description,
+  SideBarContainerDark,
+  NavDark,
+  ContactUsDark,
+  ContactUsTagLineDark,
+  VideoBarContainerDark,
+  TitleDark,
+  ViewsCountDark,
+  TextContentDark,
+  LikeTextContentDark,
+  DisLikeTextContentDark,
+  HorizontalDark,
+  NameDark,
+  DescriptionDark,
+  SubscribersDark,
+  PublishedDark,
+  LoaderContainer,
+  FailureContainer,
+  FailureImage,
+  FailureName,
+  FailureDescription,
+  RetryBtn,
 } from './styledComponents'
 
-const apiStatusConstants = {
+const apiConstants = {
   initial: 'INITIAL',
   success: 'SUCCESS',
   progress: 'PROGRESS',
@@ -47,7 +89,7 @@ const apiStatusConstants = {
 class HomeVideoItemDetails extends Component {
   state = {
     videoDetails: {},
-    apiStatus: apiStatusConstants.initial,
+    apiStatus: apiConstants.initial,
     isLiked: false,
     isDisLiked: false,
   }
@@ -57,6 +99,9 @@ class HomeVideoItemDetails extends Component {
   }
 
   getVideoDetails = async () => {
+    this.setState({
+      apiStatus: apiConstants.progress,
+    })
     const jwtToken = Cookies.get('jwt_token')
     const {match} = this.props
     const {params} = match
@@ -71,161 +116,445 @@ class HomeVideoItemDetails extends Component {
     const response = await fetch(url, options)
     if (response.ok === true) {
       const data = await response.json()
-      console.log(data)
+      const updatedData = {
+        id: data.video_details.id,
+        thumbnailUrl: data.video_details.thumbnail_url,
+        videoUrl: data.video_details.video_url,
+        title: data.video_details.title,
+        viewCount: data.video_details.view_count,
+        publishedAt: data.video_details.published_at,
+        description: data.video_details.description,
+        name: data.video_details.channel.name,
+        profileImageUrl: data.video_details.channel.profile_image_url,
+        subscriberCount: data.video_details.channel.subscriber_count,
+      }
+      console.log(updatedData)
+
+      this.setState({
+        videoDetails: updatedData,
+        apiStatus: apiConstants.success,
+      })
+    } else {
+      this.setState({
+        apiStatus: apiConstants.failure,
+      })
     }
   }
 
-  sideNavDark = () => (
-    <SideNavDarkContainer>
-      <SideNavLinksDarkContainer>
-        <SideDarkNavLinkPath to="/">
-          <HomeHeadingContainer>
-            <AiFillHome color="#cccccc" size="18" />
-            <NavHeading>Home</NavHeading>
-          </HomeHeadingContainer>
-        </SideDarkNavLinkPath>
-
-        <SideDarkNavLinkPath to="/trending">
-          <IconHeadingContainer>
-            <HiFire color="#cccccc" size="18" />
-            <NavHeading>Trending</NavHeading>
-          </IconHeadingContainer>
-        </SideDarkNavLinkPath>
-
-        <SideDarkNavLinkPath to="/gaming">
-          <IconHeadingContainer>
-            <GiLoveMystery color="#cccccc" size="18" />
-            <NavHeading>Gaming</NavHeading>
-          </IconHeadingContainer>
-        </SideDarkNavLinkPath>
-
-        <SideDarkNavLinkPath to="/saved-videos">
-          <IconHeadingContainer>
-            <HiFire color="#cccccc" size="18" />
-            <NavHeading>Saved videos</NavHeading>
-          </IconHeadingContainer>
-        </SideDarkNavLinkPath>
-      </SideNavLinksDarkContainer>
+  sideBarDark = () => (
+    <SideBarContainerDark>
+      <NavLinksContainer>
+        <LinkGenerate to="/">
+          <LinkContainer>
+            <AiFillHome color="#64748b" size="16" />
+            <NavDark>Home</NavDark>
+          </LinkContainer>
+        </LinkGenerate>
+        <LinkGenerate to="/trending">
+          <LinkContainer>
+            <HiFire color="#64748b" size="16" />
+            <NavDark>Trending</NavDark>
+          </LinkContainer>
+        </LinkGenerate>
+        <LinkGenerate to="/gaming">
+          <LinkContainer>
+            <GiLoveMystery color="#64748b" size="16" />
+            <NavDark>Gaming</NavDark>
+          </LinkContainer>
+        </LinkGenerate>
+        <LinkGenerate to="/saved-videos">
+          <LinkContainer>
+            <RiMenuAddFill color="#64748b" size="16" />
+            <NavDark>Saved videos</NavDark>
+          </LinkContainer>
+        </LinkGenerate>
+      </NavLinksContainer>
       <ContactUsContainer>
-        <ContactUsHeading>CONTACT US</ContactUsHeading>
-        <ContactUsLogosContainer>
-          <SocialLogo
+        <ContactUsDark>CONTACT US</ContactUsDark>
+        <LogosContainer>
+          <Logo
             src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
             alt="facebook logo"
           />
-          <SocialLogo
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png "
+          <Logo
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
             alt="twitter logo"
           />
-          <SocialLogo
+          <Logo
             src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-            alt=" linked in logo"
+            alt="linked in logo"
           />
-        </ContactUsLogosContainer>
-        <ContactUsDesc>
-          Enjoy! Now to see Your channels and recommendations!
-        </ContactUsDesc>
+        </LogosContainer>
+        <ContactUsTagLineDark>
+          Enjoy! Now to see your channels and recommendations!
+        </ContactUsTagLineDark>
       </ContactUsContainer>
-    </SideNavDarkContainer>
+    </SideBarContainerDark>
   )
 
-  sideNavLight = () => (
-    <SideNavLightContainer>
-      <SideNavLinksDarkContainer>
-        <SideDarkNavLinkPath to="/">
-          <HomeHeadingContainer>
-            <AiFillHome color="#424242" size="18" />
-            <NavHeadingLight>Home</NavHeadingLight>
-          </HomeHeadingContainer>
-        </SideDarkNavLinkPath>
-
-        <SideDarkNavLinkPath to="/trending">
-          <IconHeadingContainer>
-            <HiFire color="#424242" size="18" />
-            <NavHeadingLight>Trending</NavHeadingLight>
-          </IconHeadingContainer>
-        </SideDarkNavLinkPath>
-
-        <SideDarkNavLinkPath to="/gaming">
-          <IconHeadingContainer>
-            <GiLoveMystery color="#424242" size="18" />
-            <NavHeadingLight>Gaming</NavHeadingLight>
-          </IconHeadingContainer>
-        </SideDarkNavLinkPath>
-
-        <SideDarkNavLinkPath to="/saved-videos">
-          <IconHeadingContainer>
-            <HiFire color="#424242" size="18" />
-            <NavHeadingLight>Saved videos</NavHeadingLight>
-          </IconHeadingContainer>
-        </SideDarkNavLinkPath>
-      </SideNavLinksDarkContainer>
+  sideBarLight = () => (
+    <SideBarContainer>
+      <NavLinksContainer>
+        <LinkGenerate to="/">
+          <LinkContainer>
+            <AiFillHome color="#64748b" size="16" />
+            <Nav>Home</Nav>
+          </LinkContainer>
+        </LinkGenerate>
+        <LinkGenerate to="/trending">
+          <LinkContainer>
+            <HiFire color="#64748b" size="16" />
+            <Nav>Trending</Nav>
+          </LinkContainer>
+        </LinkGenerate>
+        <LinkGenerate to="/gaming">
+          <LinkContainer>
+            <GiLoveMystery color="#64748b" size="16" />
+            <Nav>Gaming</Nav>
+          </LinkContainer>
+        </LinkGenerate>
+        <LinkGenerate to="/saved-videos">
+          <LinkContainer>
+            <RiMenuAddFill color="#64748b" size="16" />
+            <Nav>Saved videos</Nav>
+          </LinkContainer>
+        </LinkGenerate>
+      </NavLinksContainer>
       <ContactUsContainer>
-        <ContactUsHeadingLight>CONTACT US</ContactUsHeadingLight>
-        <ContactUsLogosContainer>
-          <SocialLogo
+        <ContactUs>CONTACT US</ContactUs>
+        <LogosContainer>
+          <Logo
             src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
             alt="facebook logo"
           />
-          <SocialLogo
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png "
+          <Logo
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
             alt="twitter logo"
           />
-          <SocialLogo
+          <Logo
             src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-            alt=" linked in logo"
+            alt="linked in logo"
           />
-        </ContactUsLogosContainer>
-        <ContactUsDescLight>
-          Enjoy! Now to see Your channels and recommendations!
-        </ContactUsDescLight>
+        </LogosContainer>
+        <ContactUsTagLine>
+          Enjoy! Now to see your channels and recommendations!
+        </ContactUsTagLine>
       </ContactUsContainer>
-    </SideNavLightContainer>
+    </SideBarContainer>
   )
+
+  clickLike = () => {
+    this.setState(prevState => ({
+      isLiked: !prevState.isLiked,
+      isDisLiked: false,
+    }))
+  }
+
+  clickDisLike = () => {
+    this.setState(prevState => ({
+      isDisLiked: !prevState.isDisLiked,
+      isLiked: false,
+    }))
+  }
+
+  renderVideoBarLight = () => {
+    const {videoDetails, isLiked, isDisLiked} = this.state
+    const {
+      videoUrl,
+      title,
+      viewCount,
+      publishedAt,
+      profileImageUrl,
+      name,
+      subscriberCount,
+      description,
+    } = videoDetails
+    return (
+      <VideoContext.Consumer>
+        {value => {
+          const {addSavedVideo, listOfSavedVideos} = value
+          const index = listOfSavedVideos.findIndex(
+            each => each.id === videoDetails.id,
+          )
+          let isSaved
+          if (index === -1) {
+            isSaved = false
+          } else {
+            isSaved = true
+          }
+          const clickSave = () => {
+            addSavedVideo(videoDetails)
+          }
+          return (
+            <VideoBarContainer>
+              <ReactPlayerContainer>
+                <ReactPlayer
+                  url={videoUrl}
+                  width="100%"
+                  controls
+                  className="reactplayersm"
+                />
+                <ReactPlayer
+                  url={videoUrl}
+                  width="100%"
+                  height="100%"
+                  controls
+                  className="reactplayerlg"
+                />
+              </ReactPlayerContainer>
+              <Title>{title}</Title>
+              <VideoViewsAndPublishAndLikeContainer>
+                <ViewsAndPublishContainer>
+                  <ViewsCount>{viewCount} views</ViewsCount>
+                  <Published>
+                    <BsDot size="18" color="#1e293b" />
+                    {formatDistanceToNow(new Date(publishedAt))}
+                  </Published>
+                </ViewsAndPublishContainer>
+                <LikeDislikeAndSaveContainer>
+                  <LikeContainer>
+                    <SocialButton type="button" onClick={this.clickLike}>
+                      <AiOutlineLike
+                        color={isLiked ? '#2563eb' : '#64748b'}
+                        size="21"
+                      />
+                      <LikeTextContent isLiked={isLiked}>Like</LikeTextContent>
+                    </SocialButton>
+                  </LikeContainer>
+                  <DislikeContainer>
+                    <SocialButton type="button" onClick={this.clickDisLike}>
+                      <AiOutlineDislike
+                        color={isDisLiked ? '#2563eb' : '#64748b'}
+                        size="21"
+                      />
+                      <DisLikeTextContent isDisLiked={isDisLiked}>
+                        Dislike
+                      </DisLikeTextContent>
+                    </SocialButton>
+                  </DislikeContainer>
+                  <SaveContainer>
+                    <SocialButton type="button" onClick={clickSave}>
+                      <RiMenuAddLine
+                        color={isSaved ? '#2563eb' : '#64748b'}
+                        size="21"
+                      />
+                      <TextContent isSaved={isSaved}>
+                        {isSaved ? 'saved' : 'save'}
+                      </TextContent>
+                    </SocialButton>
+                  </SaveContainer>
+                </LikeDislikeAndSaveContainer>
+              </VideoViewsAndPublishAndLikeContainer>
+              <Horizontal />
+              <ProfileWithSubscribersContainer>
+                <Profile src={profileImageUrl} alt="channel logo" />
+                <NameAndSubscribers>
+                  <Name>{name}</Name>
+                  <Subscribers>{subscriberCount} subscribers</Subscribers>
+                </NameAndSubscribers>
+              </ProfileWithSubscribersContainer>
+              <Description>{description}</Description>
+            </VideoBarContainer>
+          )
+        }}
+      </VideoContext.Consumer>
+    )
+  }
+
+  renderVideoBarDark = () => {
+    const {videoDetails, isLiked, isDisLiked} = this.state
+    const {
+      videoUrl,
+      title,
+      viewCount,
+      publishedAt,
+      profileImageUrl,
+      name,
+      subscriberCount,
+      description,
+    } = videoDetails
+    return (
+      <VideoContext.Consumer>
+        {value => {
+          const {addSavedVideo, listOfSavedVideos} = value
+          const index = listOfSavedVideos.findIndex(
+            each => each.id === videoDetails.id,
+          )
+          let isSaved
+          if (index === -1) {
+            isSaved = false
+          } else {
+            isSaved = true
+          }
+          const clickSave = () => {
+            addSavedVideo(videoDetails)
+          }
+          return (
+            <VideoBarContainerDark>
+              <ReactPlayerContainer>
+                <ReactPlayer
+                  url={videoUrl}
+                  width="100%"
+                  controls
+                  className="playersm"
+                />
+                <ReactPlayer
+                  url={videoUrl}
+                  width="100%"
+                  height="100%"
+                  controls
+                  className="playerlg"
+                />
+              </ReactPlayerContainer>
+              <TitleDark>{title}</TitleDark>
+              <VideoViewsAndPublishAndLikeContainer>
+                <ViewsAndPublishContainer>
+                  <ViewsCountDark>{viewCount} views</ViewsCountDark>
+                  <PublishedDark>
+                    <BsDot size="18" color="#7e858e" />
+                    {formatDistanceToNow(new Date(publishedAt))}
+                  </PublishedDark>
+                </ViewsAndPublishContainer>
+                <LikeDislikeAndSaveContainer>
+                  <LikeContainer>
+                    <SocialButton type="button" onClick={this.clickLike}>
+                      <AiOutlineLike
+                        color={isLiked ? '#2563eb' : '#64748b'}
+                        size="21"
+                      />
+                      <LikeTextContentDark isLiked={isLiked}>
+                        Like
+                      </LikeTextContentDark>
+                    </SocialButton>
+                  </LikeContainer>
+                  <DislikeContainer>
+                    <SocialButton type="button" onClick={this.clickDisLike}>
+                      <AiOutlineDislike
+                        color={isDisLiked ? '#2563eb' : '#64748b'}
+                        size="21"
+                      />
+                      <DisLikeTextContentDark isDisLiked={isDisLiked}>
+                        Dislike
+                      </DisLikeTextContentDark>
+                    </SocialButton>
+                  </DislikeContainer>
+                  <SaveContainer>
+                    <SocialButton type="button" onClick={clickSave}>
+                      <RiMenuAddLine
+                        color={isSaved ? '#2563eb' : '#64748b'}
+                        size="21"
+                      />
+                      <TextContentDark isSaved={isSaved}>
+                        {isSaved ? 'Saved' : 'Save'}
+                      </TextContentDark>
+                    </SocialButton>
+                  </SaveContainer>
+                </LikeDislikeAndSaveContainer>
+              </VideoViewsAndPublishAndLikeContainer>
+              <HorizontalDark />
+              <ProfileWithSubscribersContainer>
+                <Profile src={profileImageUrl} alt="channel logo" />
+                <NameAndSubscribers>
+                  <NameDark>{name}</NameDark>
+                  <SubscribersDark>
+                    {subscriberCount} subscribers
+                  </SubscribersDark>
+                </NameAndSubscribers>
+              </ProfileWithSubscribersContainer>
+              <DescriptionDark>{description}</DescriptionDark>
+            </VideoBarContainerDark>
+          )
+        }}
+      </VideoContext.Consumer>
+    )
+  }
 
   videoItemDetailsContainer = () => (
-    <ReactVideoContext.Consumer>
+    <VideoContext.Consumer>
       {value => {
         const {isDark} = value
         return isDark ? this.renderVideoBarDark() : this.renderVideoBarLight()
       }}
-    </ReactVideoContext.Consumer>
+    </VideoContext.Consumer>
   )
 
-  videoItemSuccessDetails = () => {}
+  renderLoader = () => (
+    <VideoContext.Consumer>
+      {value => {
+        const {isDark} = value
+        return (
+          <LoaderContainer dark={isDark} data-testid="loader">
+            <Loader type="ThreeDots" color="blue" height="70" width="70" />
+          </LoaderContainer>
+        )
+      }}
+    </VideoContext.Consumer>
+  )
 
-  renderVideoItemDetailsThreeCases = () => {
+  clickRetryBtn = () => {
+    this.getVideoDetails()
+  }
+
+  renderFailureApi = () => (
+    <VideoContext.Consumer>
+      {value => {
+        const {isDark} = value
+        const image = isDark
+          ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+          : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
+        return (
+          <FailureContainer dark={isDark}>
+            <FailureImage src={image} alt="failure view" />
+            <FailureName dark={isDark}>Oops! Something Went Wrong</FailureName>
+            <FailureDescription dark={isDark}>
+              We are having some trouble to complete your request. Please Try
+              again.
+            </FailureDescription>
+            <RetryBtn type="button" onClick={this.clickRetryBtn}>
+              Retry
+            </RetryBtn>
+          </FailureContainer>
+        )
+      }}
+    </VideoContext.Consumer>
+  )
+
+  renderVideoDetailsOnStatus = () => {
     const {apiStatus} = this.state
     switch (apiStatus) {
-      case apiStatusConstants.success:
-        return this.videoItemSuccessDetails()
+      case apiConstants.success:
+        return this.videoItemDetailsContainer()
+      case apiConstants.progress:
+        return this.renderLoader()
+      case apiConstants.failure:
+        return this.renderFailureApi()
       default:
         return null
     }
   }
 
-  renderIndividualVideos = () => (
-    <ReactVideoContext.Consumer>
+  renderVideoPage = () => (
+    <VideoContext.Consumer>
       {value => {
         const {isDark} = value
         return (
           <VideoItemDetailsRouteContainer
             dark={isDark}
-            //  data-testid="videoItemDetails"
+            data-testid="videoItemDetails"
           >
             <Header />
             <VideoItemDetailsContainer>
-              {isDark ? this.sideNavDark() : this.sideNavLight()}
-              {this.renderVideoItemDetailsThreeCases()}
+              {isDark ? this.sideBarDark() : this.sideBarLight()}
+              {this.renderVideoDetailsOnStatus()}
             </VideoItemDetailsContainer>
           </VideoItemDetailsRouteContainer>
         )
       }}
-    </ReactVideoContext.Consumer>
+    </VideoContext.Consumer>
   )
 
   render() {
-    return this.renderIndividualVideos()
+    return this.renderVideoPage()
   }
 }
 export default HomeVideoItemDetails
