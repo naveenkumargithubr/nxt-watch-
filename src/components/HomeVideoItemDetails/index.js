@@ -396,14 +396,14 @@ class HomeVideoItemDetails extends Component {
                   url={videoUrl}
                   width="100%"
                   controls
-                  className="playersm"
+                  className="reactplayersm"
                 />
                 <ReactPlayer
                   url={videoUrl}
                   width="100%"
                   height="100%"
                   controls
-                  className="playerlg"
+                  className="reactplayerlg"
                 />
               </ReactPlayerContainer>
               <TitleDark>{title}</TitleDark>
